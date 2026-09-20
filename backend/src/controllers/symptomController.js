@@ -9,7 +9,7 @@ export const getSymptomsController = async (req, res) => {
     const data = await getBodyZonesAndSymptoms();
     return res.status(200).json({
       success: true,
-      message: 'Berhasil mengambil daftar gejala dan area tubuh',
+      message: 'Berhasil mengambil daftar gejala dan area tubuh.',
       data,
     });
   } catch (error) {
@@ -34,12 +34,12 @@ export const diagnoseSymptomsController = async (req, res) => {
     if (!symptoms || !Array.isArray(symptoms) || symptoms.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'Daftar gejala tidak boleh kosong. Harap pilih minimal 1 gejala.',
+        message: 'Daftar gejala tidak boleh kosong. Harap kirimkan payload array symptoms dengan minimal 1 gejala.',
         data: null,
       });
     }
 
-    console.log(`[Controller - diagnose] Processing diagnosis request for ${symptoms.length} symptoms...`);
+    console.log(`[Controller - diagnose] Processing diagnosis request for ${symptoms.length} symptom(s)...`);
 
     // Execute matching logic via Model
     const result = await matchConditionsFromSymptoms(symptoms);

@@ -119,6 +119,15 @@ const URGENCY_CFG = {
   },
 };
 
+function getSelfCareIcon(iconName) {
+  switch (iconName) {
+    case 'droplet': return <DropletIcon className="w-5 h-5" />;
+    case 'bed': return <BedIcon className="w-5 h-5" />;
+    case 'thermometer': return <ThermometerIcon className="w-5 h-5" />;
+    case 'pill': default: return <PillIcon className="w-5 h-5" />;
+  }
+}
+
 const DEFAULT_SELF_CARE = [
   { icon: <DropletIcon className="w-5 h-5" />, color: "#0284C7", bg: "#E0F2FE", title: "Perbanyak Minum Cairan", desc: "Minum 8–10 gelas air putih atau cairan hangat per hari untuk mencegah dehidrasi." },
   { icon: <BedIcon className="w-5 h-5" />, color: "#7C3AED", bg: "#EDE9FE", title: "Istirahat Total", desc: "Tidur minimal 8 jam malam dan tambahkan waktu istirahat untuk mempercepat pemulihan." },
@@ -332,7 +341,13 @@ export default function Result({ diagnosisResult, symptomEntries = [], onResetCh
                 Langkah Perawatan Mandiri
               </h3>
               <div className="space-y-2">
-                {DEFAULT_SELF_CARE.map((step, i) => (
+                {(diagnosisResult?.selfCareSteps && diagnosisResult.selfCareSteps.length > 0
+                  ? diagnosisResult.selfCareSteps.map((s) => ({
+                      ...s,
+                      icon: getSelfCareIcon(s.icon),
+                    }))
+                  : DEFAULT_SELF_CARE
+                ).map((step, i) => (
                   <SelfCareStepItem key={step.title} step={step} index={i} />
                 ))}
               </div>
